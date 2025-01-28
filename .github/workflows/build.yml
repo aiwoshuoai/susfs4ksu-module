@@ -13,6 +13,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: webui
+          fetch-depth: 0  # 拉取完整历史
 
       - name: Build webui branch
         run: |
@@ -21,16 +22,18 @@ jobs:
 
       - name: Copy dist folder to a temporary location
         run: |
-          cp -r dist/ ../dist-temp/
+          mkdir -p ../dist-temp  # 确保临时目录存在
+          cp -r dist/* ../dist-temp/
 
-      - name: Checkout v1.5.2+ branch
+      - name: Checkout v1.5.2 branch  # 假设分支名已更改为 v1.5.2
         uses: actions/checkout@v4
         with:
-          ref: v1.5.2+
+          ref: v1.5.2
           fetch-depth: 0
 
       - name: Remove old contents from webroot folder
         run: |
+          mkdir -p webroot  # 确保目录存在
           rm -rf webroot/*
 
       - name: Copy contents from dist-temp to webroot
@@ -40,8 +43,5 @@ jobs:
       - name: Upload release artifact
         uses: actions/upload-artifact@v4
         with:
-          name: release-v1.5.2+
-          path: ${{ github.workspace }}
-          exclude: |
-            **/.git/**
-            **/.github/**
+          name: release-v1.5.2
+          path: webroot/  # 仅上传 webroot 内容
