@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 <head>
 	<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+	<title>文档</title>
+
+
   <script type="module" crossorigin src="/assets/fade-DXKTELhO.js"></script>
   <script type="module" crossorigin src="/assets/index-rFo6hE1H.js"></script>
   <link rel="stylesheet" crossorigin href="/assets/index-Ci4WSRIA.css">
@@ -19,11 +21,11 @@
 	<canvas id="backgroundCanvas" class="absolute inset-0 z-0 max-h-screen bg-black"></canvas>
 	<dialog id="confirm_modal" class="modal modal-bottom sm:modal-middle">
 		<div class="modal-box">
-			<h3 class="font-bold text-lg font-sans">Warning!</h3>
-			<p class="py-4 font-sans" id="modal_message">Setting this on may cause bootloops if spoofed incorrectly.</p>
+			<h3 class="font-bold text-lg font-sans">警告!</h3>
+			<p class="py-4 font-sans" id="modal_message">如果设置不正确，启用此选项可能会导致启动循环。</p>
 			<div class="modal-action">
-				<button class="btn btn-error font-sans" id="modal_cancel">Cancel</button>
-				<button class="btn btn-primary font-sans" id="modal_confirm">Confirm</button>
+				<button class="btn btn-error font-sans" id="modal_cancel">取消</button>
+				<button class="btn btn-primary font-sans" id="modal_confirm">确认</button>
 			</div>
 		</div>
 	</dialog>
@@ -37,27 +39,29 @@
 			<div class="flex justify-between items-center mx-auto ml-4 pt-5 mr-4">
 				<div class="flex flex-col">
 					<h1 class="font-bold text-6xl text-white">SUSFS A</h1>
-					<h3 class="text-3xl text-balance text-white">WebUI menu</h3>
+					<h3 class="text-3xl text-balance text-white">WebUI 菜单</h3>
 					<h4 id="susfs_version" class="text-xl text-balance text-white font-amongus2"></h4>
 				</div>
 				<div>
-					<a href="credits.html" class="text-white"><button class="btn btn-outline text-xl border-white bg-cyan-100/20 dark:bg-black/20 backdrop-blur-[2.5px] mt-2 text-white">about</button></a>
+					<a href="credits.html" class="text-white"><button class="btn btn-outline text-xl border-white bg-cyan-100/20 dark:bg-black/20 backdrop-blur-[2.5px] mt-2 text-white">关于</button></a>
+					<!-- 添加切换语言的按钮 -->
+					<button class="btn btn-outline text-xl border-white bg-cyan-100/20 dark:bg-black/20 backdrop-blur-[2.5px] mt-2 text-white" onclick="toggleLanguage()">切换语言</button>
 				</div>
 			</div>
 			<section class="flex flex-col justify-start items-center min-h-fit ml-4 mr-4">
 				<div class="stats stats-horizontal border-2 border-white divide-white bg-cyan-100/20 dark:bg-black/20 backdrop-blur-[2.5px] lg:stats-horizontal mt-6">
 					<div class="stat">
-					  <div class="stat-title text-white text-2xl text-ellipsis lowercase">SUS PATH</div>
+					  <div class="stat-title text-white text-2xl text-ellipsis lowercase">SUS 路径</div>
 					  <div class="stat-value text-white text-xl text-ellipsis overflow-hidden text-center" id="sus_path"></div>
 					</div>
 				  
 					<div class="stat">
-					  <div class="stat-title text-white text-2xl text-ellipsis lowercase">SUS MOUNT</div>
+					  <div class="stat-title text-white text-2xl text-ellipsis lowercase">SUS 挂载</div>
 					  <div class="stat-value text-white text-xl text-ellipsis overflow-hidden text-center" id="sus_mount"></div>
 					</div>
 				  
 					<div class="stat">
-					  <div class="stat-title text-white text-2xl text-ellipsis lowercase">TRY UMOUNT</div>
+					  <div class="stat-title text-white text-2xl text-ellipsis lowercase">尝试卸载</div>
 					  <div class="stat-value text-white text-xl text-ellipsis overflow-hidden text-center" id="try_umount"></div>
 					</div>
 				  </div>
@@ -66,13 +70,13 @@
 						<div class="w-[18.6rem]">
 							<div class="form-control">
 							  <label class="label cursor-pointer">
-								<span class="text-white text-2xl">SUSFS Logs</span>
+								<span class="text-white text-2xl">SUSFS 日志</span>
 								<input type="checkbox" id="susfs_log" class="toggle toggle-primary" checked="checked" />
 							  </label>
 							</div>
 							<div id="sus_su_NOS" class="form-control hidden">
 								<label class="label cursor-pointer">
-								  <span class="text-white text-lg">SUS SU is not available in your kernel</span>
+								  <span class="text-white text-lg">SUS SU 在您的内核中不可用</span>
 								  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-yellow-500 dark:text-yellow-500">
 									<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
 								  </svg>																		
@@ -81,7 +85,7 @@
 							<!--this one is for 1.5.2+ if the user force enables sus_su 1-->
 							<div id="sus_su_1" class="form-control hidden">
 								<label class="label cursor-pointer">
-								  <span class="text-white text-lg font-amongus2">SUS SU is on Mode 1</span>
+								  <span class="text-white text-lg font-amongus2">SUS SU 在模式 1</span>
 								  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-yellow-500 dark:text-yellow-500">
 									<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
 								  </svg>																		
@@ -97,7 +101,7 @@
 								</div>
 								<div class="form-control">
 									<label class="label cursor-pointer">
-									<span class="text-white text-xl">SUS SU on boot</span>
+									<span class="text-white text-xl">启动时启用 SUS SU</span>
 									<input type="checkbox" id="enable_sus_su" class="toggle toggle-accent" checked="checked" />
 									</label>
 								</div>
@@ -106,64 +110,64 @@
 							<div id="sus_su_152" class="hidden">
 								<div class="form-control">
 									<label class="label cursor-pointer">
-									<span class="text-white label-text font-amongus2">SUS SU Off</span>
+									<span class="text-white label-text font-amongus2">SUS SU 关闭</span>
 									<input type="radio" onclick="ksu.exec(`su -c echo 0 > /data/adb/modules/susfs4ksu/sus_su_mode`); ksu.exec(`su -c ksu_susfs sus_su 0`); ksu.toast(`sus su off no need to reboot`);" id="sus_su_0" name="radio-10" class="radio checked:bg-red-500"/>
 									</label>
 								</div>
 								<div class="form-control">
 									<label class="label cursor-pointer">
-									<span class="text-white label-text font-amongus2">SUS SU mode 1</span>
+									<span class="text-white label-text font-amongus2">SUS SU 模式 1</span>
 									<input type="radio" onclick="ksu.exec(`su -c echo 1 > /data/adb/modules/susfs4ksu/sus_su_mode`); ksu.exec(`su -c ksu_susfs sus_su 1`); ksu.toast(`sus su mode 1 no need to reboot`);" id="sus_su_1" name="radio-10" class="radio checked:bg-blue-500"/>
 									</label>
 								</div>
 								<div class="form-control">
 									<label class="label cursor-pointer">
-									<span class="text-white label-text font-amongus2">SUS SU mode 2</span>
+									<span class="text-white label-text font-amongus2">SUS SU 模式 2</span>
 									<input type="radio" onclick="ksu.exec(`su -c echo 2 > /data/adb/modules/susfs4ksu/sus_su_mode`); ksu.exec(`su -c ksu_susfs sus_su 2`); ksu.toast(`sus su mode 2 no need to reboot`);" id="sus_su_2" name="radio-10" class="radio checked:bg-green-500"/>
 									</label>
 								</div>
 								<div class="form-control">
 								<label class="label cursor-pointer">
-									<span class="text-white text-lg font-amongus2">SUS SU 1 on boot</span>
+									<span class="text-white text-lg font-amongus2">SUS SU 1 启动时</span>
 									<input type="checkbox" id="enable_sus_su_1" class="toggle toggle-accent" checked="checked"/>
 								</label>
 								</div>
 								<div class="form-control">
 									<label class="label cursor-pointer">
-									<span class="text-white text-lg font-amongus2">SUS SU 2 on boot</span>
+									<span class="text-white text-lg font-amongus2">SUS SU 2 启动时</span>
 									<input type="checkbox" id="enable_sus_su_2" class="toggle toggle-success" checked="checked"/>
 									</label>
 								</div>
 							</div>
 						</div>
 					</div>
-					<a href="custom.html" class="text-white"><button class="btn btn-outline text-xl border-white mt-2 text-white">custom susfs settings</button></a>
+					<a href="custom.html" class="text-white"><button class="btn btn-outline text-xl border-white mt-2 text-white">自定义 SUSFS 设置</button></a>
 				  </div>
 				  <div id="sus_su_154" class="hidden">
 				  <div class="stats flex flex-col divide-x-0 divide-y-0 items-center justify-center white:bg-cyan-100/20 bg-cyan-100/20 dark:bg-black/20 mt-5 border-2 p-2 border-white backdrop-blur-[2.5px] w-max">
 					<div class="stat p-0 mt-0">
-						<div class="stat-title text-2xl text-white pb-1">auto hide settings</div>
+						<div class="stat-title text-2xl text-white pb-1">自动隐藏设置</div>
 						<div class="w-[18.6rem]">
 							<div class="form-control">
 							  <label class="label cursor-pointer">
-								<span class="text-white text-xl">auto hide default mounts</span>
+								<span class="text-white text-xl">自动隐藏默认挂载</span>
 								<input type="checkbox" id="auto_mount" class="toggle toggle-primary" checked="checked" />
 							  </label>
 							  <div class="form-control">
 								<label class="label cursor-pointer">
-								  <span class="text-white text-xl">auto hide bind mounts</span>
+								  <span class="text-white text-xl">自动隐藏绑定挂载</span>
 								  <input type="checkbox" id="auto_bind" class="toggle toggle-secondary" checked="checked" />
 								</label>
 							  </div>
 							  <div class="form-control">
 								<label class="label cursor-pointer">
-								  <span class="text-white text-xl">auto try umount bind mounts</span>
+								  <span class="text-white text-xl">自动尝试卸载绑定挂载</span>
 								  <input type="checkbox" id="auto_umount_bind" class="toggle toggle-accent" checked="checked" />
 								</label>
 							  </div>
 							  <div class="form-control">
 								<label class="label cursor-pointer">
-								  <span class="text-white text-xl">try umount for zygote system process</span>
+								  <span class="text-white text-xl">尝试卸载 Zygote 系统进程</span>
 								  <input type="checkbox" id="try_umount_zygote" class="toggle toggle-success" checked="checked" />
 								</label>
 							  </div>
@@ -174,30 +178,37 @@
 				  </div>
 				  <div class="stats flex flex-col bg-cyan-100/20 dark:bg-black/20 mt-5 border-2 border-white backdrop-blur-[2.5px]">
 					<div class="stat">
-						<div class="stat-title text-2xl text-white">Kernel Version</div>
+						<div class="stat-title text-2xl text-white">内核版本</div>
 						<p class="text-white text-sm break-all font-sans" id="kernel_version"></p>
 					</div>
 					<div class="stat">
-						<div class="stat-title text-2xl text-white">Spoof Kernel Version</div>
-						<input type="text" id="sus_uname" placeholder="default" class="input text-sm font-sans w-full"/>
+						<div class="stat-title text-2xl text-white">伪装内核版本</div>
+						<input type="text" id="sus_uname" placeholder="默认" class="input text-sm font-sans w-full"/>
 						<div class="form-control">
 							<label class="label cursor-pointer">
-							<span class="text-white text-lg font-amongus2">Spoof on boot</span>
+							<span class="text-white text-lg font-amongus2">启动时伪装</span>
 							<input type="checkbox" id="uname-spoof-on-boot" class="checkbox checkbox-primary" checked="checked"/>
 							</label>
 						</div>
 						<div id="uname-at-postfs" class="form-control hidden">
 							<label class="label cursor-pointer">
-							<span class="text-white text-lg font-amongus2">Execute on post-fs-data (spoofs better)</span>
+							<span class="text-white text-lg font-amongus2">在 post-fs-data 上执行（伪装效果更好）</span>
 							<input type="checkbox" id="uname-spoof-on-postfsdata" class="checkbox checkbox-primary" checked="checked"/>
 							</label>
 						</div>
-						<button class="btn btn-outline w-24 mt-2 border-white text-white text-lg font-normal" id="set_uname">Make it SuS</button>
+						<button class="btn btn-outline w-24 mt-2 border-white text-white text-lg font-normal" id="set_uname">设置为 SuS</button>
 					</div>
 				  </div>
 			</section>
 		</div>
 	</main>
+	<script>
+		function toggleLanguage() {
+			const currentLang = document.documentElement.lang;
+			document.documentElement.lang = currentLang === 'zh-cn' ? 'en' : 'zh-cn';
+			location.reload();
+		}
+	</script>
 </body>
 
 </html>
