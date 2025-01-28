@@ -16,8 +16,8 @@ jobs:
 
       - name: Build webui branch
         run: |
-           npm install
-           npm run build
+          npm install
+          npm run build
 
       - name: Copy dist folder to a temporary location
         run: |
